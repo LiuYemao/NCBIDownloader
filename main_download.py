@@ -9,6 +9,7 @@ Created on Tue Aug 04 20:13:32 2015
 
 import os,time
 import efetch,getEfetchKey
+import argparse
 from save_data import savePickle
 
 def download(terms_dic,term_keys,year = False,getAbstract=False):
@@ -85,10 +86,17 @@ def download(terms_dic,term_keys,year = False,getAbstract=False):
 if __name__ == "__main__":
 
     #设置工作路径
-    os.chdir('/public8/ymliu/schizophrenia/20160104')
-    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', dest = 'path', action = 'store', default=None, help='work directory which will \
+                                                                                  be saved files into')
+    args = parser.parse_args()
+    # os.chdir('/public8/ymliu/schizophrenia/20160104')
+    assert (args.path != None)
+
+    os.chdir(args.path)
     terms_dic = {"SzD":"Schizophrenic Disorders"}
     terms_keys = ["SzD"]
-    
+
+    ## for this time, I just download abstracts for schizophrenia.
     download(terms_dic,terms_keys,getAbstract=True)
     
