@@ -104,6 +104,8 @@ if __name__ == "__main__":
     SzD <TAB only> Schizophrenic Disorders
     ...
     """
+    
+    ## still need fix
     terms_dic = {};terms_keys = []
     with open(args.infile) as rf:
         for line in rf:
@@ -111,7 +113,7 @@ if __name__ == "__main__":
             if len(ll) > 1:
                 terms_keys.append(ll[0])
                 terms_dic[ll[0]] = ll[1]
-
+    ## still need fix
 
     ## for this time, I just download abstracts for schizophrenia.
     download(terms_dic,terms_keys,getAbstract=True)
