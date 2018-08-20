@@ -88,14 +88,30 @@ if __name__ == "__main__":
     #设置工作路径
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', dest = 'path', action = 'store', default=None, help='work directory which will \
-                                                                                  be saved files into')
+    be saved files into')
+    parser.add_argument('-i', dest = 'infile', action = 'store', default=None, help='input file which contains \
+    terms and corresponding descriptors')
+
     args = parser.parse_args()
     # os.chdir('/public8/ymliu/schizophrenia/20160104')
-    assert (args.path != None)
+    assert (args.path != None and args.infile != None)
 
     os.chdir(args.path)
-    terms_dic = {"SzD":"Schizophrenic Disorders"}
-    terms_keys = ["SzD"]
+    # terms_dic = {"SzD":"Schizophrenic Disorders"}
+    # terms_keys = ["SzD"]
+    """
+    the content store in input file like this:
+    SzD <TAB only> Schizophrenic Disorders
+    ...
+    """
+    terms_dic = {};terms_keys = []
+    with open(args.infile) as rf:
+        for line in rf:
+            ll = line.strip().split("\t")
+            if len(ll) > 1:
+                terms_keys.append(ll[0])
+                terms_dic[ll[0]] = ll[1]
+
 
     ## for this time, I just download abstracts for schizophrenia.
     download(terms_dic,terms_keys,getAbstract=True)
